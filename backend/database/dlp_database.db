@@ -1,0 +1,28 @@
+# This is a SQLite database file, which cannot be directly represented as text
+# It will be created when you run the setup_database.py script
+
+# To create the database, you can use the following Python script:
+import sqlite3
+import os
+
+def create_database(db_path):
+    """
+    Create SQLite database with predefined schema
+    """
+    # Ensure directory exists
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    
+    # Connect to database
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    
+    # Execute schema
+    with open('schema.sql', 'r') as schema_file:
+        cursor.executescript(schema_file.read())
+    
+    # Commit and close
+    conn.commit()
+    conn.close()
+
+# Usage
+create_database('/path/to/dlp_database.db')

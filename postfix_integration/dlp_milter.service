@@ -1,0 +1,14 @@
+[Unit]
+Description=Postfix DLP Milter Service
+After=network.target postfix.service
+
+[Service]
+Type=simple
+User=postfix_dlp
+Group=postfix
+ExecStart=/usr/local/bin/dlp_milter.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

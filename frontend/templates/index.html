@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DLP Email Solution - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Loss Prevention Email Solution</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('scan_email') }}">Scan Email</a></li>
+                    <li><a href="{{ url_for('manage_exceptions') }}">Exceptions</a></li>
+                    <li><a href="{{ url_for('view_logs') }}">Logs</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="quick-stats">
+                <div class="stat-card">
+                    <h3>Total Scanned Emails</h3>
+                    <p id="total-emails">{{ total_emails }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Blocked Emails</h3>
+                    <p id="blocked-emails">{{ blocked_emails }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Exceptions</h3>
+                    <p id="active-exceptions">{{ active_exceptions }}</p>
+                </div>
+            </section>
+
+            <section class="recent-activity">
+                <h2>Recent Activity</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Sender</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in recent_activities %}
+                        <tr>
+                            <td>{{ activity.timestamp }}</td>
+                            <td>{{ activity.sender }}</td>
+                            <td>{{ activity.status }}</td>
+                            <td>{{ activity.details }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 DLP Email Solution. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

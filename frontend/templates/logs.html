@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DLP Email Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Email Scan Logs</h1>
+
+        <div class="log-filters">
+            <form id="log-filter-form">
+                <select name="log_type">
+                    <option value="all">All Logs</option>
+                    <option value="blocked">Blocked Emails</option>
+                    <option value="passed">Passed Emails</option>
+                </select>
+
+                <input type="date" name="start_date">
+                <input type="date" name="end_date">
+
+                <button type="submit">Filter Logs</button>
+            </form>
+        </div>
+
+        <table class="logs-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Sender</th>
+                    <th>Recipient</th>
+                    <th>Status</th>
+                    <th>Violation Type</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr class="{{ 'blocked' if log.status == 'blocked' else 'passed' }}">
+                    <td>{{ log.timestamp }}</td>
+                    <td>{{ log.sender }}</td>
+                    <td>{{ log.recipient }}</td>
+                    <td>{{ log.status }}</td>
+                    <td>{{ log.violation_type or 'N/A' }}</td>
+                    <td>{{ log.details }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <!-- Pagination logic -->
+            {% if total_pages > 1 %}
+                {% for page in range(1, total_pages + 1) %}
+                    <a href="?page={{ page }}" 
+                       class="{{ 'active' if page == current_page else '' }}">
+                        {{ page }}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/logs.js') }}"></script>
+</body>
+</html>

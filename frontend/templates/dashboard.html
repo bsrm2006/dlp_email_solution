@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DLP Email Solution - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>DLP Email Solution Dashboard</h1>
+        
+        <div class="dashboard">
+            <h2>Recent Exceptions</h2>
+            <table class="exceptions-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Value</th>
+                        <th>Expiration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exception in exceptions %}
+                    <tr>
+                        <td>{{ exception.type }}</td>
+                        <td>{{ exception.value }}</td>
+                        <td>{{ exception.expiration or 'Permanent' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="dashboard">
+            <h2>Recent Logs</h2>
+            <pre>
+                {% for log in logs %}
+                    {{ log }}
+                {% endfor %}
+            </pre>
+        </div>
+
+        <a href="{{ url_for('manage_exceptions') }}" class="btn">Manage Exceptions</a>
+        <a href="{{ url_for('scan_email') }}" class="btn">Scan Email</a>
+    </div>
+</body>
+</html>
